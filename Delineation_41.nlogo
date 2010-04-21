@@ -17,8 +17,8 @@ to setup
     stop ]
   gis:set-transformation-ds gis:envelope-of fd-dataset (list (min-pxcor + 1) (max-pxcor - 1)  (min-pycor + 1) (max-pycor - 1))
   gis:apply-raster fd-dataset flow-direction
-  show "loading watershed boundary (very slow)..."
-  let watershed-boundary first gis:feature-list-of gis:load-dataset "data/watershed.shp"
+  show "loading watershed boundaries..."
+  let watershed-boundary first gis:feature-list-of gis:load-dataset "data/subbasin.shp"
   set border patches with [ pxcor = min-pxcor or pxcor = max-pxcor or pycor = min-pycor or pycor = max-pycor ]
   set interior patches with [ not member? self border ]
   set watershed interior with [ gis:intersects? watershed-boundary self ]
@@ -27,8 +27,8 @@ to setup
   gis:set-drawing-color white
   gis:draw watershed-boundary 2.0
   carefully
-  [ gis:draw gis:load-dataset "data/subwatersheds.shp" 0.3 ]
-  [ show "skipping subwatershed.shp dataset (file not found)" ]
+  [ gis:draw gis:load-dataset "data/watersheds.shp" 0.3 ]
+  [ show "skipping watersheds.shp dataset (file not found)" ]
   set-default-shape raindrops "circle"
   set-default-shape outlets "x"
   show "setting up environment..."
@@ -193,14 +193,6 @@ GRAPHICS-WINDOW
 1
 0
 ticks
-
-CC-WINDOW
-5
-616
-465
-711
-Command Center
-0
 
 BUTTON
 45
@@ -624,7 +616,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 4.0.2
+NetLogo 4.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -641,4 +633,6 @@ true
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 
+@#$#@#$#@
+0
 @#$#@#$#@
